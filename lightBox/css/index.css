@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+/* cssReset */
+body,
+div,
+p,
+img {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 12px/1.5 'microsoft yahei';
+	text-align: center;
+}
+img {
+	border: 0;
+}
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+/* 模块整体样式 */
+.wrapper {
+	display: inline-block;
+	width: 960px;
+	margin: 50px auto 0;
+}
+.wrapper > a {
+	display: block;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+	padding: 5px;
+	border: 2px solid #eee;
+	text-align: center;
+}
+.wrapper > a img {
+	width: 200px;
+	height: 200px;
+}
+.wrapper > a span {
+	display: none;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	width: 200px;
+	height: 200px;
+	line-height: 200px;
+	background: rgba(75,137,210,.8); 
+	color: #fff;
+}
+.wrapper > a:hover span {
+	display: block;
+}
+
+/* 放大模块样式 */
+.enlarge {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.8);
+}
+.enlarge:target {
+	display: block;
+}
+.enl-content {
+	display: inline-block;
+	position: relative;
+	margin: 30px auto 0;
+}
+.enlarge:target .enl-content {
+	-webkit-animation: doEnlarge 1.5s;
+	-ms-animation: doEnlarge 1.5s;
+	-moz-animation: doEnlarge 1.5s;
+	-o-animation: doEnlarge 1.5s;
+}
+.enl-content a:after {
+	position: absolute;
+	z-index: 99;
+	right: 0;
+	top: 0;
+	content: '\00D7';
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	margin-right: -10px;
+	margin-top: -10px;
+	background: #4b89d2;
+	color: #fff;
+	font: 400 20px/28px 'microsoft yahei';
+}
+/*  动画效果 */
+@-webkit-keyframes doEnlarge {
+  0% { -webkit-transform: scale(0.2); opacity: 0; }
+  100% { -webkit-transform: scale(1); opacity: 1; }
+}
+@-ms-keyframes doEnlarge {
+  0% { -webkit-transform: scale(0.2); opacity: 0; }
+  100% { -webkit-transform: scale(1); opacity: 1; }
+}
+@-moz-keyframes doEnlarge {
+  0% { -webkit-transform: scale(0.2); opacity: 0; }
+  100% { -webkit-transform: scale(1); opacity: 1; }
+}
+@-o-keyframes doEnlarge {
+  0% { -webkit-transform: scale(0.2); opacity: 0; }
+  100% { -webkit-transform: scale(1); opacity: 1; }
+}
