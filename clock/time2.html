@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>clock</title>
+	<style type="text/css">
+		ul, 
+		li, 
+		p {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		.wrapper {
+			width: 428px;
+			margin: 50px auto 0;
+			text-align: center;
+		}
+		.wrapper p {
+			margin-bottom: 10px;
+		}
+		.wrapper ul {
+			position: relative;
+			height: 70px;
+			overflow: hidden;
+		}
+		.wrapper li {
+			position: absolute;
+			top: 0;
+			width: 52px;
+		}
+		.wrapper li img {
+			display: block;
+			height: 70px;
+			border: none;
+		}
+	</style>
+	<script type="text/javascript" src="byj.js"></script>
+	<script type="text/javascript">
+		window.onload = function () {
+			var oP = document.getElementById('p1');	//	时间显示
+			var aColon = ['images/colon.jpg','images/colon2.png'];	//	冒号图片地址
+			var oDiv = document.getElementById('tShow');
+			var aLi = oDiv.getElementsByTagName('li');
+			var timer = null;
+
+			//	为li设置left数值
+			for (var i=0; i< aLi.length; i++) {
+				aLi[i].style.left = i*52 + 'px';
+			}
+
+			//	页面初始化
+			initPage();
+			function initPage () {
+				var str = getTime();	//	获取时间	
+				// aLi[7].index = Number(str.charAt(7));
+				// changeImg(aLi[7],7);
+				for (var i=0; i<aLi.length; i++) {
+					// aLi[i].index = i;	//	添加自定义属性 索引值
+					var num = Number(str.charAt(i));
+					if (isNaN(num)) {	//	将冒号与数字区分
+						colonTwinkle(aLi[i]);
+					}else{
+						aLi[i].index = num;
+						changeImg (aLi[i],i);
+					}
+				}
+
+			}
+
+			//	冒号闪烁函数
+			function colonTwinkle (obj) {
+				var i = 0;
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function () {
+					i++;
+					i %= aColon.length;
+					obj.getElementsByTagName('img')[0].src = aColon[i];
+				},500);
+			}
+
+			//	addZero 单位加0函数
+			function addZero (n) {
+				return n>9? ''+n : '0'+n;
+			}
+
+			//	getTime 获取时间函数
+			function getTime () {
+				var oTime = new Date();
+				var iHours = oTime.getHours();
+				var iMins = oTime.getMinutes();
+				var iSecs = oTime.getSeconds();
+				var str = '';
+				str = addZero(iHours) + ':' + addZero(iMins) + ':' + addZero(iSecs);
+				oP.innerHTML = str;
+				return str;
+			}
+
+			//	changeImg 换图片函数
+			function changeImg (obj,i) {
+				var aImg = obj.getElementsByTagName('img');
+				aImg[0].src = 'images/' + obj.index + '.jpg';
+				timer = setInterval(function () {
+					var newTime = getTime();	//	获取新时间
+					if (obj.index != newTime.charAt(i)) {	//	判断时间是否更新
+						aImg[1].src = 'images/' + newTime.charAt(i) + '.jpg';
+						doMove(obj,'top',10,-70,function (){
+							aImg[0].src = 'images/' + newTime.charAt(i) + '.jpg';
+							obj.style.top = '0px';
+							obj.index = newTime.charAt(i);
+						});
+					}
+				},1000);
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="tShow" class="wrapper">
+		<p id="p1">现在时间展示</p>
+		<ul>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+			<li>
+				<img src="images/colon.jpg" alt="">
+				<!-- <img src="images/colon.jpg" alt=""> -->
+			</li>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+			<li>
+				<img src="images/colon.jpg" alt="">
+				<!-- <img src="images/colon.jpg" alt=""> -->
+			</li>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+			<li>
+				<img src="images/0.jpg" alt="">
+				<img src="images/0.jpg" alt="">
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
