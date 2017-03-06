@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/* cssReset */
+html,
+body,
+div {
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: 0 none;
+}
+
+/* 模块整体样式 */
+.wrapper {
+	width: 960px;
+	margin: 50px auto 0;
+	background: #f00;
+}
+.img {
+	display: inline-block;
+	position: relative;
+
+}
+.img > img,
+.image-zoom {
+	width: 418px;
+	height: 418px;
+	border: 1px solid #eee;
+}
+.img-cover {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 218px;
+	height: 218px;
+	background: url(../images/bg.png);
+
+}
+.image-zoom {
+	display: none;
+	position: absolute;
+	left: 100%;
+	top: 0;
+	margin-left: 4px;
+	overflow: hidden;
+}
