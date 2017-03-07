@@ -15,12 +15,10 @@ img {
 .wrapper {
 	width: 960px;
 	margin: 50px auto 0;
-	background: #f00;
 }
 .img {
 	display: inline-block;
 	position: relative;
-
 }
 .img > img,
 .image-zoom {
@@ -31,10 +29,7 @@ img {
 .img-cover {
 	display: none;
 	position: absolute;
-	left: 0;
-	top: 0;
-	/*width: 218px;*/
-	/*height: 218px;*/
+	cursor: move;
 	background: url(../images/bg.png);
 
 }
@@ -45,4 +40,7 @@ img {
 	top: 0;
 	margin-left: 4px;
 	overflow: hidden;
+}
+.image-zoom img {
+	position: absolute;
 }
