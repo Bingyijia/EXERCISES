@@ -15,7 +15,8 @@ window.onload = function () {
 		oImgCover.style.display = 'block';
 		oImgZoom.style.display = 'block';
 
-		
+		oImgCover.style.width = oImg.offsetWidth * oImgZoom.offsetWidth / oImgBig.offsetWidth + 'px';
+		oImgCover.style.height = oImg.offsetWidth * oImgZoom.offsetWidth / oImgBig.offsetWidth + 'px';
 	}
 
 	// 鼠标移出事件
