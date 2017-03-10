@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+		body,
+		div {
+			margin: 0;
+			padding: 0;
+		}
+
+		.wrapper {
+			margin-top: 100px;
+			text-align: center;
+			-webkit-perspective: 2500px;
+			-webkit-perspective-origin: 50% 50%;
+			-webkit-transform-style: preserve-3d;
+		}
+		.box {
+			display: inline-block;
+			width: 200px;
+			height: 120px;
+			margin-left: 100px;
+			position: relative;
+			-webkit-perspective-origin: 50% 50%;
+			-webkit-transform-style: preserve-3d;
+		}
+		img {
+			position: absolute;
+			width: 200px;
+			border: 0 none;
+			-webkit-transform: translateZ(300px);
+		}
+		.img-1 {
+			-webkit-transform: translateZ(300px);
+		}
+		.img-2 {
+			-webkit-transform: rotateY(40deg) translateZ(300px);
+		}
+		.img-3 {
+			-webkit-transform: rotateY(80deg) translateZ(300px);
+		}
+		.img-4 {
+			-webkit-transform: rotateY(120deg) translateZ(300px);
+		}
+		.img-5 {
+			-webkit-transform: rotateY(160deg) translateZ(300px);
+		}
+		.img-6 {
+			-webkit-transform: rotateY(200deg) translateZ(300px);
+		}
+		.img-7 {
+			-webkit-transform: rotateY(240deg) translateZ(300px);
+		}
+		.img-8 {
+			-webkit-transform: rotateY(280deg) translateZ(300px);
+		}
+		.img-9 {
+			-webkit-transform: rotateY(320deg) translateZ(300px);
+		}
+		.box:hover {
+			/*-webkit-transform: rotateY(-40deg);*/
+		}
+	</style>
+	<!-- <script tupe="text/javascript">
+		window.onload = function () {
+			var oBox = document.getElementById('box1');
+			var aImg = document.getElementsByTagName('img');
+			var len = aImg.length;
+			var i;
+			var degIndex = 0;
+
+			for (i = 0; i < len; i++) {
+				aImg[i].onclick = function () {
+					degIndex++;
+					oBox.style.transform = 'rotateY(' + (-40*degIndex) % 360 + 'deg)';
+				}
+			}
+		}
+	</script> -->
+</head>
+<body>
+	<div class="wrapper">
+		<div class="box" id="box1">
+			<img class="img-1" src="img/1.jpg" alt="">
+			<img class="img-2" src="img/2.jpg" alt="">
+			<img class="img-3" src="img/3.jpg" alt="">
+			<img class="img-4" src="img/4.jpg" alt="">
+			<img class="img-5" src="img/5.jpg" alt="">
+			<img class="img-6" src="img/6.jpg" alt="">
+			<img class="img-7" src="img/7.jpg" alt="">
+			<img class="img-8" src="img/8.jpg" alt="">
+			<img class="img-9" src="img/9.jpg" alt="">
+		</div>
+	</div>
+</body>
+</html>
