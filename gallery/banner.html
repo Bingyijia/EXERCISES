@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>海报画廊</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: #fff;
+			color: #555;
+			font: 14px 'Avenir Next', 'Lantinghei SC';
+			-webkit-font-smoothing: antialiased;
+		}
+
+		/* 模块整体样式 */
+		.wrapper {
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			height: 600px;
+			overflow: hidden;
+			margin-top: -300px;
+			background-color: #333;
+			-webkit-perspective: 800px;
+		}
+
+		.photo {
+			position: absolute;
+			z-index: 1;
+			width: 260px;
+			height: 320px;
+			box-shadow: 0 0 1px rgba(0,0,0,.01);
+		}
+
+		.photo .side {
+			position: absolute;
+			right: 0;
+			top: 0;
+			box-sizing: border-box;
+			width: 100%;
+			height: 100%;
+			padding: 20px;
+			background-color: #eee;
+		}
+
+		.photo .side-front {
+			/*display: none;*/
+		}
+
+		.photo .side-front .image {
+			width: 100%;
+			height: 250px;
+			line-height: 250px;
+			overflow: hidden;
+		}
+
+		.photo .side-front .image img {
+			width: 100%;
+		}
+
+		.photo .side-front .caption {
+			text-align: center;
+			font-size: 16px;
+			line-height: 50px;
+		}
+		
+		.photo .side-back {
+			/*display: none;*/
+		}
+
+		.photo .side-back .desc {
+			line-height: 1.5em;
+		}
+
+		/* 当前选中的样式 */
+		.photo_center {
+			left: 50%;
+			top: 50%;
+			margin: -160px 0 0 -130px;
+			z-index: 999;
+		}
+
+		.photo-wrap {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			-webkit-transform-style: preserve-3d;
+			-webkit-transition: all 2s;
+		}
+
+		.photo-wrap .side {
+			-webkit-backface-visibility: hidden;
+		}
+
+		.photo-wrap .side-front {
+			-webkit-transform: rotateY(0deg);
+		}
+
+		.photo-wrap .side-back {
+			-webkit-transform: rotateY(180deg);
+		}
+
+		.photo_front .photo-wrap {
+			-webkit-transform: rotateY(0deg);
+		}
+		
+		.photo_back .photo-wrap {
+			-webkit-transform: rotateY(180deg);
+		}
+	</style>
+	<!-- <script type="text/javascript">
+		// window.onload =function () {
+		// 	var oDiv = document.getElementById('div1');
+
+		// 	oDiv.onclick = function () {
+		// 		turn(this);
+		// 	};
+
+		// 	function turn(ele) {
+		// 		var cls = ele.className;
+
+		// 		if (/photo_front/.test(cls)) {
+		// 			cls = cls.replace(/photo_front/,'photo_back');
+		// 		} else {
+		// 			cls = cls.replace(/photo_back/,'photo_front');
+		// 		}
+
+		// 		return ele.className = cls;
+		// 	}
+
+		// };
+
+		function turn(ele) {
+			var cls = ele.className;
+
+			if (/photo_front/.test(cls)) {
+				cls = cls.replace(/photo_front/,'photo_back');
+			} else {
+				cls = cls.replace(/photo_back/,'photo_front');
+			}
+
+			return ele.className = cls;
+		}
+
+	</script> -->
+</head>
+<body onselectstart="return false">
+	
+	<!-- wrapper 模块整体 开始 -->
+	<div class="wrapper">
+
+		<!-- photo-wrap负责翻转 开始 -->
+		<div id="div1" class="photo photo_center photo_front" onclick="turn(this)" >
+
+			<!-- photo-wrap负责翻转 开始 -->
+			<div class="photo-wrap">
+
+				<!-- side-front 正面 开始 -->
+				<div class="side side-front">
+					<p class="image">
+						<img src="test.jpg" alt="">
+					</p>
+					<p class="caption">
+						用于测试的标题
+					</p>
+				</div>
+				<!-- side-front 正面 结束 -->
+
+				<!-- side-back 反面 开始 -->
+				<div class="side side-back">
+					<p class="desc">
+						描述信息
+					</p>
+				</div>
+				<!-- side-back 反面 结束 -->
+
+			</div>
+			<!-- photo-wrap负责翻转 结束 -->
+
+		</div>
+		<!-- photo-wrap负责翻转 结束 -->
+
+	</div>
+	<!-- wrapper 模块整体 结束 -->
+</body>
+<script type="text/javascript">
+
+	// 翻页控制
+	function turn(ele) {
+		var cls = ele.className;
+
+		if (/photo_front/.test(cls)) {
+			cls = cls.replace(/photo_front/,'photo_back');
+		} else {
+			cls = cls.replace(/photo_back/,'photo_front');
+		}
+
+		return ele.className = cls;
+	}
+
+	// 
+
+</script>
+</html>
