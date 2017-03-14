@@ -16,7 +16,7 @@
 - [imageZoom](http://htmlpreview.github.io/?https://github.com/Bingyijia/EXERCISES/blob/master/imageZoom/imageZoom.html)
   类似淘宝的主图放大功能
 
-- [gallery]()
+- [gallery](http://htmlpreview.github.io/?https://github.com/Bingyijia/EXERCISES/blob/master/gallery/banner2.html)
 
-  目前还没有兼容，还有马上回出JQuery版本
+  有图片，加载很慢，目前还没有兼容，还有马上回出JQuery版本
 
