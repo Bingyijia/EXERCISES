@@ -15,6 +15,16 @@
 			font: 14px 'Avenir Next', 'Lantinghei SC';
 			-webkit-font-smoothing: antialiased;
 		}
+		@font-face {
+  		font-family: 'icomoon';
+ 		 	src:  url('fonts/icomoon.eot?qqqu0e');
+ 		 	src:  url('fonts/icomoon.eot?qqqu0e#iefix') format('embedded-opentype'),
+    	url('fonts/icomoon.ttf?qqqu0e') format('truetype'),
+    	url('fonts/icomoon.woff?qqqu0e') format('woff'),
+    	url('fonts/icomoon.svg?qqqu0e#icomoon') format('svg');
+  		font-weight: normal;
+  		font-style: normal;
+		}
 
 		/* 模块整体样式 */
 		.wrapper {
@@ -30,10 +40,14 @@
 
 		.photo {
 			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: -160px 0 0 -130px;
 			z-index: 1;
 			width: 260px;
 			height: 320px;
 			box-shadow: 0 0 1px rgba(0,0,0,.01);
+			-webkit-transition: all 1s ease-in-out;
 		}
 
 		.photo .side {
@@ -89,7 +103,7 @@
 			width: 100%;
 			height: 100%;
 			-webkit-transform-style: preserve-3d;
-			-webkit-transition: all 2s;
+			-webkit-transition: all 1s ease-in-out;
 		}
 
 		.photo-wrap .side {
@@ -104,12 +118,58 @@
 			-webkit-transform: rotateY(180deg);
 		}
 
-		.photo_front .photo-wrap {
-			-webkit-transform: rotateY(0deg);
+		/* 导航样式 */
+		.nav {
+			position: absolute;
+			z-index: 999;
+			left: 10%;
+			bottom: 30px;
+			width: 80%;
+			height: 30px;
+			text-align: center;
 		}
 		
-		.photo_back .photo-wrap {
+		/* 普通样式 */
+		.nav .i {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			border-radius: 15px;
+			background: #fff;
+			-webkit-transform: scale(0.5);
+			-webkit-transition: all 1s ease-in-out;
+		}
+		.nav .i:before {
+			display: inline-block;
+			content: '\e965';
+			line-height: 30px;
+			font-size: 80%;
+			font-family: 'icomoon';
+			opacity: 0;
+		}
+		/* 选中的状态 */
+		.nav .i_current {
+			-webkit-transform: scale(1);
+		}
+		.nav .i_current:before {
+			opacity: 1;
+		}
+		/* 背面样式 */
+		.nav .i_back {
 			-webkit-transform: rotateY(180deg);
+			background: #b7b7b7;
+		}
+
+		.photo-wrap {
+			-webkit-transform-origin: 0% 50%;
+		}
+
+		.photo_front .photo-wrap {
+			-webkit-transform: translate(0,0) rotateY(0deg);
+		}
+
+		.photo_back .photo-wrap {
+			-webkit-transform: translate(260px,0) rotateY(180deg);
 		}
 	</style>
 	
@@ -159,11 +219,18 @@
 	// 翻页控制
 	function turn(ele) {
 		var cls = ele.className;
+		var n = ele.id.split('_')[1];
+
+		if (!/photo_center/.test(cls)) {
+			return rsort(n);
+		}
 
 		if (/photo_front/.test(cls)) {
 			cls = cls.replace(/photo_front/,'photo_back');
+			g('#nav_' + n).className += ' i_back';
 		} else {
 			cls = cls.replace(/photo_back/,'photo_front');
+			g('#nav_' + n).className = g('#nav_' + n).className.replace(/\s*i_back\s*/,' ');
 		}
 
 		return ele.className = cls;
@@ -181,6 +248,7 @@
 		var template = g('#wrapper').innerHTML;
 		var html = [];
 		var _html;
+		var nav = [];
 		var i;
 
 		for (i = 0; i < data.length; i++) {
@@ -190,11 +258,13 @@
 											.replace('{{caption}}',data[i].caption)
 											.replace('{{desc}}',data[i].desc);
 			html.push(_html);
+			nav.push('<span class="i" id="nav_' + i + '" onclick="turn(g(\'#photo_'+ i + '\'))">&nbsp;</span>');
 		}
+		html.push('<div class="nav">' + nav.join('') + '</div>');
 		g('#wrapper').innerHTML = html.join('');
+		rsort(generateRnd([0,19]));
 	}
 	addData();
-	rsort(generateRnd([0,19]));
 
 	// 生成随机数
 	function generateRnd(range) {
@@ -204,6 +274,7 @@
 		var numb;
 
 		return Math.floor(Math.random() * (diff + 1) + min);
+
 	}
 
 	// 随机生成中间海报
@@ -212,10 +283,17 @@
 		var _photo;
 		var photos = [];
 		var photo_center;
+		var photos_left;
+		var photos_right;
 
+		// 清除其他元素的photo_center类名
 		_photo = g('.photo');
 		for (i = 0; i < _photo.length; i++ ) {
-			_photo[i].className = _photo[i].className.replace(/\s*photo_center\s*/,' ');
+			_photo[i].className = _photo[i].className
+																							.replace(/\s*photo_center\s*/,' ')
+																							.replace(/\s*photo_back\s*/,' ');
+			_photo[i].style.left = _photo[i].style.top = '';
+			_photo[i].style.webkitTransform = 'rotateZ(0deg) scale(1.3)';
 			photos.push(_photo[i]);
 		}
 
@@ -223,7 +301,56 @@
 		photo_center.className += ' photo_center ';
 		photo_center = photos.splice(n,1);
 
-		console.log(photo_center);
+		// 设置左右图片的位置
+		photos_left = photos.splice(0,Math.floor(photos.length / 2));
+		photos_right = photos;
+		for (i = 0; i < photos_left.length; i++) {
+			photos_left[i].style.left = generateRnd(posRange().left.x) + 'px';
+			photos_left[i].style.top = generateRnd(posRange().left.y) + 'px';
+			photos_left[i].style.webkitTransform = 'rotateZ(' + generateRnd([-150,150]) + 'deg) scale(1)';
+		}
+
+		for (i = 0; i < photos_right.length; i++) {
+			// photos_left[i].style.left =  + 'px';
+			photos_right[i].style.left = generateRnd(posRange().right.x) + 'px';
+			photos_right[i].style.top = generateRnd(posRange().right.y) + 'px';
+			photos_right[i].style.webkitTransform = 'rotateZ(' + generateRnd([-360,360]) + 'deg) scale(1)';
+		}
+
+		// 设置导航样式
+		var navs = g('.i');
+		for (i = 0; i < navs.length; i++) {
+			navs[i].className = navs[i].className.replace(/\s*i_current\s*/,' ');
+			navs[i].className = navs[i].className.replace(/\s*i_back\s*/,' ');
+		}
+
+		navs[n].className += ' i_current ';
+	}
+
+	// 位置确认函数
+	function posRange() {
+		var oWrapper = g('#wrapper');
+		var oPhoto = g('.photo')[0];
+		var position = {
+			"left": {
+				"x": [], 
+				"y": []
+			},
+			"right": {
+				"x": [], 
+				"y": []
+			}
+		};
+
+		position.wrapper = oWrapper;
+		position.photo = oPhoto;
+		position.left.x = [- position.photo.clientWidth, (position.wrapper.clientWidth - position.photo.clientWidth) / 2];
+		position.left.y = [- position.photo.clientHeight, position.wrapper.clientHeight];
+
+		position.right.x = [(position.wrapper.clientWidth - position.photo.clientWidth) / 2, position.wrapper.clientWidth];
+		position.right.y = position.left.y;
+
+		return position;
 	}
 
 </script>
