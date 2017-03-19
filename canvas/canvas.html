@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+	<style type="text/css">
+		body,
+		div {
+			margin: 0;
+			padding: 0;
+		}
+		.wrapper {
+			width: 302px;
+			height: 302px;
+			margin: 50px auto 0;
+			/*border: 1px solid #f00;*/
+		}
+		.m-ctrl {
+
+		}
+	</style>
+</head>
+<body>
+
+<div id="wrapper" class="wrapper">
+	<canvas id="canvas">
+		当前浏览器不支持canvas，请升级或者更换浏览器！
+	</canvas>
+	<!-- <div id="controller" class="m-ctrl">
+		<input id="toLeft" type="button" value="222">
+		<input id="toRight" type="button" value="222">
+		<input id="toFront" type="button" value="222">
+		<input id="toBack" type="button" value="222">
+	</div> -->
+</div>
+	
+</body>
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	var oImg;
+
+	// 设置canvas的基本样式
+	canvas.width = 300;
+	canvas.height = 300;
+	canvas.style.border = '1px solid #ccc';
+
+	oImg = new Image();
+	oImg.src = 'demo.png';
+	oImg.onload = function () {
+		var i = 0;
+
+		setInterval(function () {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			ctx.drawImage(oImg,
+			40 * i,0,
+			40,65,
+			130,120,
+			40,65
+			);
+
+			i++
+			i = i%4;
+		},150);
+		
+	}
+
+
+</script>
+</html>
