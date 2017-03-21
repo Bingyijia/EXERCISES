@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    body,
+    div {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      width: 302px;
+      height: 302px;
+      margin: 50px auto 0;
+      text-align: center;
+    }
+
+    .ctrl {
+      display: inline-block;
+    }
+
+    .ctrl button {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      box-sizing: content-box;
+      width: 30px;
+      height: 30px;
+      margin: 0;
+      padding: 0;
+      border-radius: 3px;
+      outline: 0;
+      font: 16px 'microsoft yahei';
+      line-height: normal;
+    }
+
+    .ctrl button:after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -6px 0 0 -6px;
+      content: '';
+      width: 12px;
+      height: 12px;
+      background-image: url(icon.png);
+    }
+
+    .ctrl button:nth-child(1):after {
+      background-position: 0 -24px;
+    }
+
+    .ctrl button:nth-child(2):after {
+      background-position: 0 -36px;
+    }
+
+    .ctrl button:nth-child(3):after {
+      background-position: 0 0;
+    }
+
+    .ctrl button:nth-child(4):after {
+      background-position: 0 -12px;
+    }
+  </style>
+  <!-- <script type="text/javascript" src="index.js"></script> -->
+</head>
+<body>
+<div id="wrapper" class="wrapper">
+  <canvas id="canvas">当前浏览器不支持canvas，请更换或者升级浏览器</canvas>
+  <div id="controller" class="ctrl">
+      <button id="toLeft"></button>
+      <button id="toRight"></button>
+      <button id="toBack"></button>
+      <button id="toFront"></button>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+ // 'use strict';
+
+  // 构造函数Draw
+  function Draw(option) {
+    this._init(option);
+  }
+
+  Draw.prototype = {
+    // 初始化
+    _init: function (option) {
+      this.imgSrc = option.imgSrc;
+      this.fps = ~~option.fps === 0 ? 0 : option.fps || 10;
+      this.frameIndex = option.frameIndex || 0;
+      this.dirIndex = option.dirIndex || 0;
+      this.sx = option.sx || 0;
+      this.sy = option.sy || 0;
+      this.sWidth = ~~option.sWidth === 0 ? 0 : option.sWidth || 40;
+      this.sHeight = ~~option.sHeight === 0 ? 0 : option.sHeight || 65;
+      this.dx = option.dx || 0;
+      this.dy = option.dy || 0;
+      this.dWidth = ~~option.dWidth === 0 ? 0 : option.dWidth || 40;
+      this.dHeight = ~~option.dHeight === 0 ? 0 : option.dHeight || 65;
+    },
+
+    // 渲染方法
+    render: function (ctx) {
+      var _this = this;
+      var frameIndex = 0;
+      var img = new Image();
+      img.src = _this.imgSrc;
+      img.onload = function () {
+        setInterval(function () {
+          ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+          ctx.drawImage(
+            img,
+            _this.sWidth * frameIndex, _this.sHeight * _this.dirIndex,
+            _this.sWidth, _this.sHeight,
+            _this.dx, _this.dy,
+            _this.dWidth, _this.dHeight
+          );
+
+          frameIndex++;
+          frameIndex %= 4;
+        }, 1000 / _this.fps);
+      }
+    },
+
+    // 改变方向
+    changeDir: function (target) {
+      switch (target.id) {
+        case 'toLeft' :
+          this.dirIndex = 1;
+          break;
+
+        case 'toRight' :
+          this.dirIndex = 2;
+          break;
+
+        case 'toFront' :
+          this.dirIndex = 0;
+          break;
+
+        case 'toBack' :
+          this.dirIndex = 3;
+          break;
+      }
+    }
+  };
+
+
+  var oCanvas = document.getElementById('canvas');
+  var ctx = oCanvas.getContext('2d');
+  var oController = document.getElementById('controller');
+  var test;
+  var data = {
+    "imgSrc": "demo.png",
+    "fps": 5,
+    "dirIndex": 0,
+    "sx": 0,
+    "sy": 0,
+    "sWidth": 40,
+    "sHeight": 65,
+    "dx": 130,
+    "dy": 120,
+    "dWidth": 40,
+    "dHeight": 65
+  };
+
+  // 设置画布的基本样式
+  oCanvas.width = 300;
+  oCanvas.height = 300;
+  oCanvas.style.border = '1px solid #ccc';
+  ctx.strokeStyle = '#f00';
+
+  test = new Draw(data);
+  test.render(ctx);
+
+  oController.onclick = function (e) {
+    var target = e.target;
+    test.changeDir(target);
+  };
+
+</script>
+</html>
