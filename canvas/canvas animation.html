@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas animation</title>
+		<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.rawgit.com/konvajs/konva/1.5.0/konva.js"></script>
+	<script type="text/javascript" src="DrawRect.js"></script>
+	<script type="text/javascript">
+		window.onload = function () {
+			var stage = new Konva.Stage({
+				container: 'wrapper',
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+
+			var innerRadius = 126;
+			var outerRadius = 220;
+			var cenX = window.innerWidth / 2;
+			var cenY = window.innerHeight / 2;
+
+			var bgLayer = new Konva.Layer();
+			var animateLayer = new Konva.Layer();
+			stage.add(bgLayer);
+			stage.add(animateLayer);
+
+			/**
+			 * 创建背景层部分，包括：中心圆、内圆辅助线、外圆辅助线
+			 */
+			// 内圆辅助线
+			var innerCircle = new Konva.Circle({
+				x: cenX,
+				y: cenY,
+				radius: innerRadius,
+				stroke: '#ccc',
+				strokeWidth: 1,
+				dash: [7, 3]
+			});
+
+			// 外圆辅助线
+			var outerCircle = new Konva.Circle({
+				x: cenX,
+				y: cenY,
+				radius: outerRadius,
+				stroke: '#ccc',
+				strokeWidth: 1,
+				dash: [7, 3]
+			});
+
+			// 中心圆
+			var centerCircle = new Konva.Circle({
+				x: cenX,
+				y: cenY,
+				radius: 60,
+				fill: '#fe0'
+			});					
+
+			// 中心环
+			var centerRing = new Konva.Ring({
+				x: cenX,
+				y: cenY,
+				innerRadius: 30,
+				outerRadius: 70,
+				fill: '#000',
+				opacity: .2
+			});
+
+			// 中心文字
+			var centerText = new Konva.Text({
+				x: cenX - 70,
+				y: cenY - 9,
+				width: 140,
+				text: '前端开发',
+				fontSize: 18,
+				fill: '#000',
+				align: 'center' 
+			});
+
+			bgLayer.add(outerCircle);
+			bgLayer.add(innerCircle);
+			bgLayer.add(centerRing);
+			bgLayer.add(centerCircle);
+			bgLayer.add(centerText);
+
+			// 绘制背景层
+			bgLayer.draw();
+
+
+
+			/**
+			 * 创建动画层部分，包括：内圆组件、外圆组件、动画组件、事件组件
+			 * 内圆组件包括：内圆组、css组件、html组件
+			 */
+			//内圆组
+			var innerGroup = new Konva.Group({
+				x: cenX,
+				y: cenY
+			});
+
+			// css组件
+			var css_circle;
+			var css_angle = 30;
+			var css_data = {
+				x: innerRadius * Math.cos(css_angle * Math.PI / 180),
+				y: innerRadius * Math.sin(css_angle * Math.PI / 180),
+				innerRadius: 30,
+				outerRadius: 35,
+				innerFill: '#f00',
+				outerFill: '#0ff',
+				outerOpacity: .3,
+				text: 'CSS',
+				font: 'microsoft yahei',
+				fontSize: 18,
+				fontFill: '#000',
+				align: 'center'
+			};
+
+			css_circle = new DrawCircle(css_data);
+			css_circle.addToGroupOrLayer(innerGroup);
+
+			// html组件
+			var html_circle;
+			var html_angle = 240;
+			var html_data = {
+				x: innerRadius * Math.cos(html_angle * Math.PI / 180),
+				y: innerRadius * Math.sin(html_angle * Math.PI / 180),
+				innerRadius: 30,
+				outerRadius: 35,
+				innerFill: '#345',
+				outerFill: '#987',
+				outerOpacity: .3,
+				text: 'HTML',
+				font: 'microsoft yahei',
+				fontSize: 18,
+				fontFill: '#fff',
+				align: 'center'
+			};
+
+			html_circle = new DrawCircle(html_data);
+			html_circle.addToGroupOrLayer(innerGroup);
+			animateLayer.add(innerGroup);
+			
+
+			
+			/**
+			 * 创建外圆组件部分，包括：外圆组、 JS圆组件
+			 */
+			// 外圆组
+			var outerGroup = new Konva.Group({
+				x: cenX,
+				y: cenY
+			});
+
+			// JS圆组件
+			var JS_circle;
+			var JS_angle = 300;
+			var JS_data = {
+				x: outerRadius * Math.cos(JS_angle * Math.PI / 180),
+				y: outerRadius * Math.sin(JS_angle * Math.PI / 180),
+				innerRadius: 35,
+				outerRadius: 40,
+				innerFill: '#ff0',
+				outerFill: '#00f',
+				outerOpacity: .3,
+				text: 'JS',
+				font: 'microsoft yahei',
+				fontSize: 18,
+				fontFill: '#000',
+				align: 'center'
+			};
+
+			JS_circle = new DrawCircle(JS_data);
+			JS_circle.addToGroupOrLayer(outerGroup);
+			animateLayer.add(outerGroup);
+
+			/**
+			 * 动画组件
+			 */
+			var rotateAnglePerSecond = 60;
+			var animation = new Konva.Animation(function (frame) {
+				var rotateAngle = rotateAnglePerSecond * frame.timeDiff / 1000;
+				innerGroup.rotate(rotateAngle);
+				innerGroup.getChildren().each(function (item, index) {
+					item.rotate(- rotateAngle);
+				});
+
+				outerGroup.rotate(- rotateAngle);
+				outerGroup.getChildren().each(function (item, index) {
+					item.rotate(rotateAngle);
+				});
+ 			}, animateLayer);
+
+			animation.start();
+
+			// 绘制动画层
+			animateLayer.draw();
+
+			/**
+			 * 动画组件：鼠标移入减速、鼠标移出恢复
+			 */
+			animateLayer.on('mouseover', function () {
+				rotateAnglePerSecond = 10;
+			 });
+
+			animateLayer.on('mouseout', function () {
+				rotateAnglePerSecond = 60;
+			 });
+		}
+	</script>
+</head>
+<body>
+	<div id="wrapper"></div>
+</body>
+</html>
