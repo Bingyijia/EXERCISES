@@ -329,6 +329,5 @@ DrawPieChart.prototype = {
 			});
 		})();
 
-		// factorial();
 	}
 };
