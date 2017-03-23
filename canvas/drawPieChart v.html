@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pieChart</title>
+		<style type="text/css">
+		
+		* {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.rawgit.com/konvajs/konva/1.5.0/konva.js"></script>
+	<script type="text/javascript" src="Draw.js"></script>
+</head>
+<body>
+	<div id="wrapper"></div>
+</body>
+<script type="text/javascript">
+		// window.onload = function () {
+			var stage = new Konva.Stage({
+				container: 'wrapper',
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+
+			var cenX = window.innerWidth / 2;
+			var cenY = window.innerHeight / 2;
+			var layer = new Konva.Layer();
+			stage.add(layer);
+
+			var data = [
+				{name: '前端', value: .1, color: '#f00'},
+				{name: 'PHP', value: .15, color: '#9f0'}, 
+				{name: 'java', value: .35, color: '#498'},
+				{name: 'UI', value: .25, color: '#0ff'},
+				{name: 'IOS', value: .1, color: '#d5f'},
+				{name: 'Android', value: .05, color: '#000'}
+			];
+
+			// 创建实例
+			var test = new DrawPieChart({
+				x: cenX,
+				y: cenY,
+				radius: 100,
+				data: data,
+				duration: 1
+			});
+
+			test.addToGroupOrLayer(layer);
+			test.doAnimate();
+
+
+			// 渲染画布
+			layer.draw();
+			
+		// }
+	</script>
+</html>
