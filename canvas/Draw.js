@@ -321,7 +321,6 @@ DrawPieChart.prototype = {
 					itemIndex++;
 
 					if (itemIndex === _this.data.length) {
-						itemIndex = 0;
 						return;
 					}
 
