@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo 7</title>
+		<style type="text/css">
+		
+		* {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.rawgit.com/konvajs/konva/1.5.0/konva.js"></script>
+	<!-- <script type="text/javascript" src="DrawRect.js"></script> -->
+</head>
+<body>
+	<div id="wrapper"></div>
+</body>
+<script type="text/javascript">
+		// window.onload = function () {
+			var stage = new Konva.Stage({
+				container: 'wrapper',
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+
+			var cenX = window.innerWidth / 2;
+			var cenY = window.innerHeight / 2;
+			var layer = new Konva.Layer();
+			stage.add(layer);
+
+			var data = [
+				{name: '前端', value: .1, color: '#f00'},
+				{name: 'PHP', value: .15, color: '#9f0'}, 
+				{name: 'java', value: .35, color: '#498'},
+				{name: 'UI', value: .25, color: '#0ff'},
+				{name: 'IOS', value: .1, color: '#d5f'},
+				{name: 'Android', value: .05, color: '#000'}
+			];
+
+			var tempAngle = -90;
+
+			// 循环创建饼状图
+			data.forEach(function (item, index) {
+
+				// 创建饼状图
+				var wedge = new Konva.Wedge({
+					x: cenX,
+					y: cenY,
+					radius: 100,
+					angle: item.value * 360,
+					fill: item.color,
+					rotation: tempAngle
+				});
+
+				layer.add(wedge);
+
+				// 添加文字
+				var textAngle = tempAngle + item.value * 180;
+				var valueText = new Konva.Text({
+					x: cenX + (100 + 10) * Math.cos(textAngle * Math.PI / 180),
+					y: cenY + (100 + 10) * Math.sin(textAngle * Math.PI / 180),
+					text: item.value * 100 + '%',
+					fill: item.color,
+				});
+
+				layer.add(valueText);
+
+				// 修正文字水平方向
+				if (textAngle > 90 && textAngle < 270) {
+					valueText.x(valueText.x() - valueText.getWidth());
+				}
+
+				// 修正文字垂直方向
+				if (textAngle > 180 || textAngle < 0) {
+					valueText.y(valueText.y() - valueText.getHeight());
+				}
+
+				tempAngle += item.value * 360;
+			});
+
+			/*
+			 * 动画创建部分：采用递归的方式添加动画
+			 */
+			var duration = 1;
+			var itemIndex = 0;
+			var wedges = layer.find('Wedge');
+
+			// 创建动画函数
+			function createAnimation() {
+				// 清空角度
+				wedges.forEach(function (item, index) {
+					item.angle(0);
+				});
+
+				// 创建动画
+				function wedgeAnimation() {
+					var item = wedges[itemIndex];
+
+					// 动画操作
+					item.to({
+						angle: data[itemIndex].value * 360,
+						duration: data[itemIndex].value * duration,
+						onFinish: function () {
+							itemIndex++;
+
+							if (itemIndex == data.length) {
+								itemIndex = 0;
+								return;
+							}
+
+							return wedgeAnimation();
+						}
+					});
+				}
+
+				wedgeAnimation();
+			}
+
+			createAnimation();
+
+			// 渲染画布
+			layer.draw();
+			
+		// }
+	</script>
+</html>
