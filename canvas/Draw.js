@@ -312,7 +312,7 @@ DrawPieChart.prototype = {
 			item.angle(0);
 		});
 
-		(function factorial() {
+		(function recursion() {
 			var item = _this.wedgeGroup.getChildren()[itemIndex];
 			item.to({
 				angle: _this.data[itemIndex].value * 360,
@@ -324,7 +324,7 @@ DrawPieChart.prototype = {
 						return;
 					}
 
-					return factorial();
+					return recursion();
 				}
 			});
 		})();
