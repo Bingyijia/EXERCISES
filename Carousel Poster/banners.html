@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>banners</title>
+	<style type="text/css">
+		/*cssReset*/
+		html,
+		body,
+		div,
+		ul,
+		li,
+		p {
+			margin: 0;
+			padding: 0;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		.wrapper {
+			width: 1083px;
+			height: 350px;
+			margin: 50px auto 0;
+		}
+
+		.wrapper > div {
+			position: relative;
+			text-align: center;
+		}
+
+		.wrapper > div > img {
+			position: absolute;
+			top: 50%;
+			margin-top: -25px;
+			opacity: 0.3;
+		}
+
+		.wrapper > div > img:hover {
+			opacity: 1;
+		}
+
+		.left-arrow {
+			left: 20px;
+		}
+
+		.right-arrow {
+			right: 20px;
+		}
+
+		.preview-circle {
+			position: absolute;
+			bottom: 10px;
+			display: inline-block;
+		}
+
+		.preview-circle li {
+			float: left;
+			width: 10px;
+			height: 10px;
+			margin: 0 3px;
+			border-radius: 5px;
+			background: #000;
+			opacity: .5;
+		}
+
+		li.active {
+			background: #f00;
+		}
+
+	</style>
+	<script type="text/javascript" src="js/banner.js">
+	</script>
+	<script type="text/javascript">
+		window.onload = function () {
+			var aUrl = ['htttp:www.baidu.com','http:www.sina.com','http:www.qq.com','http:www.sohu.com'];
+			var aImg = ['img/banner0.jpg','img/banner1.jpg','img/banner2.jpg','img/banner3.jpg'];
+			var index;
+			var bannerLink = document.getElementById('bannerLink');
+			var bannerImg = document.getElementById('bannerImg');
+			var previewCircle = document.getElementById('previewCircle');
+			var aLi = previewCircle.getElementsByTagName('li');
+			var wrapper = document.getElementById('wrapper');
+			var leftArrow = document.getElementById('leftArrow');
+			var rightArrow = document.getElementById('rightArrow');
+			var speed = 1000;
+
+
+
+			var json = {
+					url: aUrl,
+					src: aImg,
+					bannerLink: 'bannerLink',
+					bannerImg: 'bannerImg',
+					leftArrow: 'leftArrow',
+					rightArrow: 'rightArrow',
+					previewCircle: 'previewCircle',
+					wrapper: 'wrapper',
+					speed: speed,
+
+
+			};
+			console.log(json);
+			CarouselBanner(json);
+
+			// // 初始化页面
+			// index = 0;
+			// doInit();
+
+			// // 设置轮播
+			// var timer;
+			// setTimer();
+
+			// // 鼠标悬浮停止
+			// wrapper.onmouseover = function () {
+			// 	clearInterval(timer);
+			// }
+
+			// // 鼠标离开开始
+			// wrapper.onmouseout = function () {
+			// 	setTimer();
+			// }
+
+			// // click left arrow to get the previous banner
+			// leftArrow.onclick = function () {
+			// 	if (index === 0) {
+			// 		index = 3;
+			// 	} else {
+			// 		index--;
+			// 	}
+			// 	doInit();
+			// };
+
+			// // click right arrow to get the next banner 
+			// rightArrow.onclick = function () {
+			// 	doNext();
+			// }
+
+			// // click the preview circle to change the banner
+			// var i;
+			// for (i = 0; i < aLi.length; i++) {
+			// 	aLi[i].index = i;
+			// 	aLi[i].onclick = function () {
+			// 		index = this.index;
+			// 		doInit();
+			// 	};
+			// }
+
+			// // 更换海报函数
+			// function doInit() {
+			// 	var i;
+			// 	bannerLink.href = aUrl[index];
+			// 	bannerImg.src = 'img/banner' + index + '.jpg';
+			// 	for (i = 0; i < aLi.length; i++) {
+			// 		aLi[i].className = '';
+			// 	}
+
+			// 	aLi[index].className = 'active';
+			// }
+
+			// // 设置定时器
+			// function setTimer() {
+			// 	timer = setInterval(doNext,1000);
+			// }
+
+			// // show the next banner
+			// function doNext() {
+			// 	if (index < 3) {
+			// 		index++;
+			// 	} else {
+			// 		index %= 3;
+			// 	}
+
+			// 	doInit();
+			// }
+
+		};
+	</script>
+</head>
+<body>
+	<div id="wrapper" class="wrapper">
+		<div class="banners">
+			<img id="leftArrow" class="left-arrow" src="img/left-a.png" alt="">
+			<img id="rightArrow" class="right-arrow" src="img/right-a.png" alt="">
+			<a id="bannerLink" href="#">
+				<img id="bannerImg" src="img/banner1.jpg" alt="">
+			</a>
+			<ul id="previewCircle" class="preview-circle">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
