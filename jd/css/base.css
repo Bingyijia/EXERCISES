@@ -1,0 +1,64 @@
+/* cssReset */
+html,
+body,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li {
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+img {
+	border: none;
+	vertical-align: middle;
+}
+
+textarea {
+	resize: none;
+}
+
+input, textarea {
+	outline-style: none;
+}
+
+
+/* 版心宽度 */
+.w {
+	width: 1190px;
+}
+
+/* 左浮动 */
+.fl {
+	float: left;
+}
+
+/* 右浮动 */
+.fr {
+	float: right;
+}
+
+/* 文字左对齐 */
+.tl {
+	text-align: left;
+}
+
+/* 文字居中 */
+.tc {
+	text-align: center;
+}
+
+/* 文字右侧居中 */
+.tr {
+	text-align: right;
+}
