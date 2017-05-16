@@ -16,6 +16,7 @@ li {
 }
 
 a {
+	color: #000;
 	text-decoration: none;
 }
 
@@ -30,12 +31,14 @@ textarea {
 
 input, textarea {
 	outline-style: none;
+	border: 1px solid #f00;
 }
 
 
 /* 版心宽度 */
 .w {
 	width: 1190px;
+	margin: auto;
 }
 
 /* 左浮动 */
