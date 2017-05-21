@@ -34,6 +34,12 @@ input, textarea {
 	border: 1px solid #f00;
 }
 
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: '';
+}
+
 
 /* 版心宽度 */
 .w {
