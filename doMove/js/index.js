@@ -45,7 +45,7 @@ window.onload = function () {
 
 
 	// to move the banner 
-	function doMove(obj) {
+	function doMove(obj,endFn) {
 		var speed = obj.speed || 500;
 		var startPos = obj.startPos;
 		var endPos = obj.endPos;
@@ -93,6 +93,7 @@ window.onload = function () {
 			
 		},50);
 
+		endFn && endFn();
 		
 
 
