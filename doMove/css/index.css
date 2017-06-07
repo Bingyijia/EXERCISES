@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.wrapper {
+	position: relative;
+	width: 800px;
+	height: 800px;
+	margin: 50px auto;
+	overflow: hidden;
+}
+
+.banner-view {
+	position: absolute;
+	width: 1600px;
+	left: 0;
+	/*height: 800px;*/
+	/*overflow: hidden;*/
+}
+
+.banner-img {
+	/*position: absolute;*/
+	/*top: 0;*/
+	float: left;
+	/*width: 100px;*/
+	/*height*/
+	background: #f00;
+}
+
+/*.left-img {
+	left: 0;
+}
+
+.right-img {
+	right: -100%;
+}*/
+
+.arrow-btn {
+	position: absolute;
+	top: 50%;
+	width: 80px;
+	height: 80px;
+	margin-top: -40px ;
+	background: #f00;
+}
+
+.left-btn {
+	left: 20px;
+}
+
+.right-btn {
+	right: 20px;
+}
+
+
+
