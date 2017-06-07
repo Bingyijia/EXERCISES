@@ -1,7 +1,9 @@
 .shortcut {
 	height: 30px;
 	line-height: 30px;
-	background: #ccc;
+	border-top: 1px solid #d0cac9;
+	border-bottom: 1px solid #ddd;
+	background: #e3e4e5;
 }
 
 .position {
