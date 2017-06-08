@@ -1,17 +1,19 @@
 window.onload = function () {
+	var bannerWrapper = document.getElementById('bannerWrapper');
 	var leftBtn = document.getElementById('leftBtn');
 	var rightBtn = document.getElementById('rightBtn');
 	var leftBanner = document.getElementById('leftBanner');
 	var centerBanner = document.getElementById('centerBanner');
 	var rightBanner = document.getElementById('rightBanner');
 	var bannerView = document.getElementById('bannerView');
+	var timer;
 	var imgIndex = 0;
 	var preIndex;
 	var nextIndex;
 	var imgAmount = 3;
 	var json = {
 			speed: 50,
-			stepSize: 91
+			stepSize: 150
 		};
 
 	rightBtn.onclick = function () {
@@ -27,6 +29,27 @@ window.onload = function () {
 		doPre();
 		doMove(json);
 	};
+
+
+	//
+	timer = setInterval(function () {
+		json.startPos = 0;
+		json.endPos = -800;
+		doMove(json, doNext);
+	},5000);
+
+
+	bannerWrapper.onmouseover = function () {
+		clearInterval(timer);
+	};
+
+	bannerWrapper.onmouseleave = function () {
+		timer = setInterval(function () {
+			json.startPos = 0;
+			json.endPos = -800;
+			doMove(json, doNext);
+		},5000); 
+	}
 
 	// to show the previous banner
 	function doPre() {
