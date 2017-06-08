@@ -16,12 +16,14 @@ window.onload = function () {
 			stepSize: 150
 		};
 
+	// to show the next banner
 	rightBtn.onclick = function () {
 		json.startPos = 0;
 		json.endPos = -800;
 		doMove(json, doNext);
 	};
 
+	// to show the previous banner
 	leftBtn.onclick = function () {
 		json.startPos = -800;
 		json.endPos = 0;
@@ -30,19 +32,19 @@ window.onload = function () {
 		doMove(json);
 	};
 
-
-	//
+	// to set the interval
 	timer = setInterval(function () {
 		json.startPos = 0;
 		json.endPos = -800;
 		doMove(json, doNext);
 	},5000);
 
-
+	// to stop the interval
 	bannerWrapper.onmouseover = function () {
 		clearInterval(timer);
 	};
 
+	// to set the interval
 	bannerWrapper.onmouseleave = function () {
 		timer = setInterval(function () {
 			json.startPos = 0;
@@ -76,8 +78,7 @@ window.onload = function () {
 		bannerView.style.left = '0px';
 	}
 
-
-	// to move the banner 
+	// to translate the banner
 	function doMove(obj,endFn) {
 		var startPos = obj.startPos;
 		var endPos = obj.endPos;
@@ -102,12 +103,11 @@ window.onload = function () {
 
 		},speed);
 
-
 	}
 
+	// to get the obj's attr
 	function getStyle(obj, attr) {
 		return obj.currentStyle ? obj.currentStyle[attr] : window.getComputedStyle(obj,false)[attr];
 	}
-
 
 };
